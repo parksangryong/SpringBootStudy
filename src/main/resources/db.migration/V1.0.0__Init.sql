@@ -83,7 +83,6 @@ create TABLE IF NOT EXISTS ecomm."user" (
 	email varchar(24),
 	phone varchar(24),
 	user_status varchar(16) NOT NULL DEFAULT 'ACTIVE' NULL_TO_DEFAULT,
-	role varchar(16) NOT NULL DEFAULT 'ROLE_USER' NULL_TO_DEFAULT,
 	PRIMARY KEY(id)
 );
 
