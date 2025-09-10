@@ -31,6 +31,8 @@ dependencies {
     runtimeOnly 'com.h2database:h2' // h2 : 메모리 DB
     runtimeOnly  'com.mysql:mysql-connector-j' // mysql
 
+    implementation 'net.logstash.logback:logstash-logback-encoder:7.4' // 로깅
+
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
