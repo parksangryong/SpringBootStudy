@@ -1,14 +1,16 @@
 package com.spring.cart.demo.api.controller;
 
 import com.spring.cart.demo.api.dto.EmployeeRes;
+import com.spring.cart.demo.api.dto.PageResponse;
 import com.spring.cart.demo.api.service.EmployeeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/employees")
+@RequestMapping("/employees")
 public class EmployeeController {
     private final EmployeeService service;
     public EmployeeController(EmployeeService service) { this.service = service; }
@@ -18,5 +20,14 @@ public class EmployeeController {
     @GetMapping("/{empId}")
     public ResponseEntity<EmployeeRes> getOne(@PathVariable Integer empId) {
         return ResponseEntity.ok(service.getOne(empId));
+    }
+
+    @GetMapping
+    public ResponseEntity<PageResponse<EmployeeRes>> search(
+            @RequestParam(defaultValue = "") String q,
+            @org.springframework.data.web.PageableDefault(size = 20, sort = "id",
+                    direction = org.springframework.data.domain.Sort.Direction.ASC) Pageable pageable
+    ) {
+        return ResponseEntity.ok(service.search(q, pageable));
     }
 }

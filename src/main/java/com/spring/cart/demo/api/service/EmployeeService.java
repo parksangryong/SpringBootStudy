@@ -1,6 +1,8 @@
 // src/main/java/.../api/service/EmployeeService.java
 package com.spring.cart.demo.api.service;
 
+import com.spring.cart.demo.api.dto.PageResponse;
+import org.springframework.data.domain.Pageable;
 import com.spring.cart.demo.api.entity.EmployeeEntity;
 import com.spring.cart.demo.api.dto.EmployeeRes;
 import com.spring.cart.demo.api.common.AppException;
@@ -19,5 +21,12 @@ public class EmployeeService {
         EmployeeEntity e = repo.findById(empNo)
                 .orElseThrow(() -> new AppException(Errors.USER.USER_NOT_FOUND));
         return EmployeeRes.from(e);
+    }
+
+    public PageResponse<EmployeeRes> search(String q, Pageable pageable) {
+        var page = repo
+                .findByFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCase(q, q, pageable)
+                .map(EmployeeRes::from);
+        return PageResponse.from(page);
     }
 }
